@@ -1,0 +1,24 @@
+FROM node:20-slim as base
+RUN npm install -g pnpm@8.7.6
+CMD ["pnpm","setup"]
+RUN corepack enable
+
+FROM base AS build
+
+COPY . /usr/src/app
+COPY  scripts ./scripts
+WORKDIR /usr/src/app
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+RUN pnpm run -r build
+RUN pnpm deploy --filter=fragrance-service --prod /prod/fragrance-service
+
+
+FROM base AS fragrance-service
+
+COPY --from=build /prod/fragrance-service /prod/fragrance-service
+COPY  --from=build scripts ./scripts
+# USER appuser
+WORKDIR /prod/fragrance-service
+EXPOSE 5000
+CMD [ "pnpm", "start" ]
+

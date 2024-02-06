@@ -1,0 +1,39 @@
+{
+  "name": "fragrance-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "tsc && node dist/server.js",
+    "start:dev": "nodemon --watch 'src/**/*.ts' --exec pnpm ts-node src/server.ts ",
+    "build": "tsc",
+    "clean": "rm -rf node_modules dist",
+    "migrate:up": "tsc && node dist/scripts/migrate.js up",
+    "migrate:down": "tsc && node dist/scripts/migrate.js down",
+    "migrate:redo": "tsc && node dist/scripts/migrate.js redo",
+    "migrate:create": "npx node-pg-migrate create $npm_config_migration_name --migrations-dir=migrations --migrations-table=migrations --schema=public --migration-file-language=sql",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.0.2",
+    "ts-node": "^10.9.2"
+  },
+  "dependencies": {
+    "@fastify/cors": "^9.0.1",
+    "@fastify/postgres": "^5.2.2",
+    "@repo/types": "workspace:*",
+    "@types/convict": "^6.1.6",
+    "convict": "^6.2.4",
+    "dotenv": "^16.3.1",
+    "fastify": "^4.25.1",
+    "fastify-type-provider-zod": "^1.1.9",
+    "fastify-zod": "^1.4.0",
+    "node": "^21.2.0",
+    "node-pg-migrate": "^6.2.2",
+    "typescript": "^5.3.3",
+    "zod": "^3.22.4"
+  }
+}
