@@ -19,7 +19,7 @@ services:
       retries: 5
 
   app:
-    container_name: "profileService"
+    container_name: "fragrance-service"
     image: profile-service
     command: ["../../scripts/migrateAndStart.sh"]
     build:

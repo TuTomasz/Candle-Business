@@ -3,7 +3,7 @@ import { FastifyInstance } from "fastify";
 // CHECK HEALTH OF THE SERVICE
 export const healthCheck = async (fastify: FastifyInstance) => {
   fastify.get(
-    "/profile/health-check",
+    "/fragrance/health-check",
     {
       schema: {
         response: {
