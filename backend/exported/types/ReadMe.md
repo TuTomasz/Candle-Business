@@ -13,11 +13,3 @@ pnpm start:dev
 ```
 
 It will download all the ncessary dependancies and docker images and run the migrations and start the service localy.
-
-## Fragrance Order Form - Frontend Board
-
-To run the frontend with:
-
-```
-npm start
-```
