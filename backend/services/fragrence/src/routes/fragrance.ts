@@ -22,8 +22,8 @@ export const fragrance = async (fastify: FastifyInstance) => {
             description: row.description,
             category: row.category,
             image_url: row.image_url,
-            created_At: row.created_At,
-            updated_At: row.updated_At,
+            created_at: row.created_at,
+            updated_at: row.updated_at,
           })
         );
 
@@ -80,8 +80,8 @@ export const fragrance = async (fastify: FastifyInstance) => {
           description: result.description,
           category: result.category,
           image_url: result.image_url,
-          created_At: result.created_At,
-          updated_At: result.updated_At,
+          created_at: result.created_at,
+          updated_at: result.updated_at,
         };
 
         return transport;
@@ -124,11 +124,72 @@ export const fragrance = async (fastify: FastifyInstance) => {
           description: result.description,
           category: result.category,
           image_url: result.image_url,
-          created_At: result.created_At,
-          updated_At: result.updated_At,
+          created_at: result.created_at,
+          updated_at: result.updated_at,
         };
         reply.code(201).send(transport);
       } catch (error: any) {
+        const errorResponse: ErrorResponse = {
+          statusCode: 500,
+          error: "Internal Server Error",
+          message: error.toString(),
+        };
+
+        reply.send(errorResponse);
+      }
+    }
+  );
+
+  // POST multiple new fragrances
+  fastify.post<{
+    Body: Fragrance.FragranceCreateTransport[];
+    Reply: Fragrance.FragranceTransport[] | ErrorResponse;
+  }>(
+    "/fragrance/bulk",
+    {
+      schema: {
+        body: z.array(Fragrance.fragranceCreateTransport),
+        response: {
+          201: z.array(Fragrance.fragranceTransport),
+          500: errorResponse,
+        },
+      },
+    },
+    async (request, reply) => {
+      const fragrances = request.body;
+
+      try {
+        const results: Fragrance.FragranceTransport[] = [];
+
+        await fastify.pg.query("BEGIN"); // Start the transaction
+
+        for (const fragrance of fragrances) {
+          const { name, description, category, image_url } = fragrance;
+
+          const { rows } = await fastify.pg.query(
+            "INSERT INTO fragrance (name, description, category, image_url) VALUES ($1, $2, $3, $4) RETURNING *",
+            [name, description, category, image_url]
+          );
+
+          const [result] = rows;
+
+          const transport: Fragrance.FragranceTransport = {
+            id: result.id,
+            name: result.name,
+            description: result.description,
+            category: result.category,
+            image_url: result.image_url,
+            created_at: result.created_at,
+            updated_at: result.updated_at,
+          };
+
+          results.push(transport);
+        }
+
+        await fastify.pg.query("COMMIT");
+        reply.code(201).send(results);
+      } catch (error: any) {
+        await fastify.pg.query("ROLLBACK");
         const errorResponse: ErrorResponse = {
           statusCode: 500,
           error: "Internal Server Error",
@@ -162,7 +223,7 @@ export const fragrance = async (fastify: FastifyInstance) => {
 
       try {
         const result2 = await fastify.pg.query(
-          `UPDATE fragrance SET name = $1, description = $2, category = $3, "updated_At" = now(),  image_url = $4 WHERE id = $5 RETURNING *`,
+          `UPDATE fragrance SET name = $1, description = $2, category = $3, "updated_at" = now(),  image_url = $4 WHERE id = $5 RETURNING *`,
           [name, description, category, image_url, id]
         );
 
@@ -184,8 +245,8 @@ export const fragrance = async (fastify: FastifyInstance) => {
           description: result.description,
           category: result.category,
           image_url: result.image_url,
-          created_At: result.created_At,
-          updated_At: result.updated_At,
+          created_at: result.created_at,
+          updated_at: result.updated_at,
         };
 
         reply.code(200).send(transport);

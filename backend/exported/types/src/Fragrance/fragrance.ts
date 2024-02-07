@@ -5,8 +5,8 @@ export const fragranceTransport = z.strictObject({
   name: z.string(),
   description: z.string(),
   category: z.string(),
-  created_At: z.coerce.date(),
-  updated_At: z.coerce.date(),
+  created_at: z.coerce.date(),
+  updated_at: z.coerce.date(),
   image_url: z.string(),
 });
 
