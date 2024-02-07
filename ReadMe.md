@@ -6,13 +6,13 @@ To run backend service you need to have pnpm and docker installed on your system
 npm install -g pnpm
 ```
 
-Then cd into the Backend dir and start using:
+After cd into the Backend directory and start using:
 
 ```
 pnpm start:dev
 ```
 
-It will download all the ncessary dependancies and docker images and run the migrations and start the service localy.
+It will download all the ncessary dependancies, docker images, run the migrations and start the service localy.
 
 ## Fragrance Order Form - Frontend Board
 
