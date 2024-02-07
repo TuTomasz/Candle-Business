@@ -8,8 +8,8 @@
     "migrate:up": "pnpm run --r migrate:up",
     "compose:up": "docker compose -f docker-compose.yml up --build ",
     "compose:up:local": "docker compose -f docker-compose.local.yml up -d --wait",
-    "clean": "echo 'Cleaning up...' && rm -rf node_modules && pnpm run --r clean",
-    "start": "echo 'Starting the project...' && pnpm run --parallel start",
+    "clean": "rm -rf node_modules && pnpm run --r clean",
+    "start": "pnpm run --parallel start",
     "start:dev": " pnpm compose:up:local && pnpm run migrate:up && pnpm run --parallel start:dev",
     "start:container": "pnpm compose:up"
   },

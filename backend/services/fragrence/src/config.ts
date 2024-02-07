@@ -38,15 +38,6 @@ const dbPassword = process.env.DB_PASSWORD
 const dbHost = process.env.DB_HOST ? process.env.DB_HOST : "localhost";
 const dbPort = process.env.DB_PORT ? process.env.DB_PORT : "5432";
 
-console.log(`dbUser: ${dbUser}`);
-console.log(`dbPassword: ${dbPassword}`);
-console.log(`dbHost: ${dbHost}`);
-console.log(`dbPort: ${dbPort}`);
-
-console.log(
-  `dbUrl: postgresql://${dbUser}:${dbPassword}@${dbHost}:${dbPort}/fragrance`
-);
-
 config.load({
   env: process.env.NODE_ENV ? process.env.NODE_ENV : "development",
   port: process.env.PORT ? process.env.PORT : 5000,

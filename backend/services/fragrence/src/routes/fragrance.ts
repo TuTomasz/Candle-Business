@@ -3,7 +3,7 @@ import { z } from "zod";
 import { ErrorResponse, errorResponse, Fragrance } from "@repo/types";
 
 export const fragrance = async (fastify: FastifyInstance) => {
-  // GET all fragrences
+  // GET all fragrances
   fastify.get<{ Reply: Fragrance.FragranceTransport[] | ErrorResponse }>(
     "/fragrance",
     {
@@ -15,7 +15,7 @@ export const fragrance = async (fastify: FastifyInstance) => {
           "SELECT * FROM fragrance"
         );
 
-        const results: Fragrance.FragranceTransport[] = rows.map(
+        const transport: Fragrance.FragranceTransport[] = rows.map(
           (row: Fragrance.FragranceTransport) => ({
             id: row.id,
             name: row.name,
@@ -27,7 +27,7 @@ export const fragrance = async (fastify: FastifyInstance) => {
           })
         );
 
-        return results;
+        return transport;
       } catch (error: any) {
         console.log("error", error);
         reply.send({
@@ -39,7 +39,7 @@ export const fragrance = async (fastify: FastifyInstance) => {
     }
   );
 
-  // GET a single fragrence
+  // GET a single fragrance
   fastify.get<{
     Params: { id: string };
     Reply: Fragrance.FragranceTransport | ErrorResponse;
@@ -95,7 +95,7 @@ export const fragrance = async (fastify: FastifyInstance) => {
     }
   );
 
-  // POST a new fragrence
+  // POST a new fragrance
   fastify.post<{
     Body: Fragrance.FragranceCreateTransport;
     Reply: Fragrance.FragranceTransport | ErrorResponse;
@@ -260,7 +260,7 @@ export const fragrance = async (fastify: FastifyInstance) => {
     }
   );
 
-  // DELETE a fragrence
+  // DELETE a fragrance
   fastify.delete<{
     Params: { id: string };
     Reply: ErrorResponse;
