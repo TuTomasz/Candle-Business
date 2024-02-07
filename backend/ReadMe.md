@@ -12,4 +12,4 @@ After cd into the Backend directory and start using:
 pnpm start:dev
 ```
 
-It will download all the ncessary dependancies, docker images, run the migrations and start the service localy.
+It will download all the necessary dependancies, docker images, run the migrations and start the service locally.

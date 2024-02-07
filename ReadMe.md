@@ -12,11 +12,11 @@ After cd into the Backend directory and start using:
 pnpm start:dev
 ```
 
-It will download all the ncessary dependancies, docker images, run the migrations and start the service localy.
+It will download all the necessary dependencies, docker images, run the migrations and start the service locally.
 
 ## Fragrance Order Form - Frontend Board
 
-To run the frontend with:
+Run Frontend with:
 
 ```
 npm start
